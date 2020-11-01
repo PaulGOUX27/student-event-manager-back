@@ -19,7 +19,8 @@ Enter interact with models
 docker-compose exec app bash
 python3
 from api import create_app
-from api.models import db, EventCategory, Event
+from api.models import db, EventCategory, Event, Person
+from datetime import datetime
 app = create_app()
 app.app_context().push()
 ```
