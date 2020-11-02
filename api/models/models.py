@@ -1,7 +1,7 @@
-from api.core import Mixin
 from .base import db
 from datetime import datetime
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy_serializer import SerializerMixin
 
 Base = declarative_base()
 
@@ -11,7 +11,10 @@ event_event_categories = db.Table('event_event_categories',
                                             primary_key=True)
                                   )
 
-class Event(Mixin, db.Model):
+
+class Event(db.Model, SerializerMixin):
+    serialize_rules = ('-event_categories.events', '-person.events', '-person_id',)
+
     id = db.Column(db.Integer, primary_key=True)
     start_date = db.Column(db.DateTime)
     end_date = db.Column(db.DateTime)
@@ -35,7 +38,9 @@ class Event(Mixin, db.Model):
         return f"<Event {self.title}>"
 
 
-class EventCategory(Mixin, db.Model):
+class EventCategory(db.Model, SerializerMixin):
+    # serialize_rules = ('-events.',)
+
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
 
@@ -46,7 +51,7 @@ class EventCategory(Mixin, db.Model):
         return f"<EventCategory {self.name}>"
 
 
-class Person(Mixin, db.Model):
+class Person(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     login = db.Column(db.String)
     password = db.Column(db.String)

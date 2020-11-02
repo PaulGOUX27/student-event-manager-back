@@ -74,14 +74,17 @@ def create_app(test_config=None):
     # register sqlalchemy to this app
     from api.models import db
 
-    db.init_app(app)  # initialize Flask SQLALchemy with this flask app
+    db.init_app(app)  # initialize Flask SQLAlchemy with this flask app
     Migrate(app, db)
 
     # import and register blueprints
-    from api.views import main
+    from api.views import main, eventCategoryView, personView, eventView
 
     # why blueprints http://flask.pocoo.org/docs/1.0/blueprints/
     app.register_blueprint(main.main)
+    app.register_blueprint(eventCategoryView.eventCategories)
+    app.register_blueprint(personView.persons)
+    app.register_blueprint(eventView.events)
 
     # register error Handler
     app.register_error_handler(Exception, all_exception_handler)

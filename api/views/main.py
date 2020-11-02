@@ -1,7 +1,6 @@
 from flask import Blueprint, request
-from api.models import db, Person, Email
-from api.core import create_response, serialize_list, logger
-from sqlalchemy import inspect
+from api.models import db
+from api.core import create_response, logger
 
 main = Blueprint("main", __name__)  # initialize blueprint
 
@@ -16,13 +15,7 @@ def index():
     return "<h1>Hello World!</h1>"
 
 
-# function that is called when you visit /persons
-@main.route("/persons", methods=["GET"])
-def get_persons():
-    persons = Person.query.all()
-    return create_response(data={"persons": serialize_list(persons)})
-
-
+"""
 # POST request for /persons
 @main.route("/persons", methods=["POST"])
 def create_person():
@@ -49,3 +42,4 @@ def create_person():
     return create_response(
         message=f"Successfully created person {new_person.name} with id: {new_person._id}"
     )
+"""
