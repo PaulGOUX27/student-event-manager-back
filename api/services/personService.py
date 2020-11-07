@@ -17,3 +17,6 @@ def create(fields):
     db.session.commit()
     return new_person
 
+
+def getOne(person_id: int):
+    return Person.query.get(person_id)

@@ -21,3 +21,11 @@ def delete_event_by_id(id_event):
 def create_event():
     new_event = eventService.create(request.json)
     return create_response(status=201, data=new_event.to_dict())
+
+
+@events.route("/events/<int:id_event>", methods=["GET"])
+def get_one_by_id(id_event):
+    event = eventService.getOne(id_event)
+    if event is None:
+        return create_response(status=404, message="Event {} not found".format(id_event))
+    return create_response(data=event.to_dict())

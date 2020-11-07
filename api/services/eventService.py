@@ -15,3 +15,7 @@ def create(fields):
     db.session.add(new_event)
     db.session.commit()
     return new_event
+
+
+def getOne(event_id: int):
+    return Event.query.get(event_id)

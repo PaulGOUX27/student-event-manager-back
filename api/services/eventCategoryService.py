@@ -16,3 +16,7 @@ def create(fields):
     db.session.add(new_event_category)
     db.session.commit()
     return new_event_category
+
+
+def getOne(event_category_id: int):
+    return EventCategory.query.get(event_category_id)

@@ -21,3 +21,11 @@ def delete_person_by_id(id_person):
 def create_person():
     new_person = personService.create(request.json)
     return create_response(status=201, data=new_person.to_dict())
+
+
+@persons.route("/persons/<int:id_person>", methods=["GET"])
+def get_one_by_id(id_person):
+    person = personService.getOne(id_person)
+    if persons is None:
+        return create_response(status=404, message="Person {} not found".format(id_person))
+    return create_response(data=person.to_dict())
