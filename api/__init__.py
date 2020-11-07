@@ -82,9 +82,9 @@ def create_app(test_config=None):
 
     # why blueprints http://flask.pocoo.org/docs/1.0/blueprints/
     app.register_blueprint(main.main)
-    app.register_blueprint(eventCategoryView.eventCategories)
-    app.register_blueprint(personView.persons)
-    app.register_blueprint(eventView.events)
+    app.register_blueprint(eventCategoryView.eventCategory_blueprint)
+    app.register_blueprint(personView.person_blueprint)
+    app.register_blueprint(eventView.event_blueprint)
 
     # register error Handler
     app.register_error_handler(Exception, all_exception_handler)
