@@ -1,4 +1,4 @@
-from flask import Blueprint
+from flask import Blueprint, request
 
 from api.core import serialize_list, create_response
 from api.services import personService
@@ -15,3 +15,9 @@ def get_persons():
 def delete_person_by_id(id_person):
     personService.deleteId(id_person)
     return create_response(status=204)
+
+
+@persons.route("/persons", methods=["POST"])
+def create_person():
+    new_person = personService.create(request.json)
+    return create_response(status=201, data=new_person.to_dict())

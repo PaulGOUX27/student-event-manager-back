@@ -27,20 +27,23 @@ class Event(db.Model, SerializerMixin):
         backref=db.backref('events', lazy=True))
     person_id = db.Column(db.Integer, db.ForeignKey('person.id'), nullable=False)
 
-    def __init__(self, start_date: datetime, end_date: datetime, place: str, description: str, title: str):
+    def __init__(self, start_date: datetime, end_date: datetime, place: str, description: str, title: str, person_id=1,
+                 event_categories=None):
+        if event_categories is None:
+            event_categories = []
         self.place = place
         self.title = title
         self.description = description
         self.end_date = end_date
         self.start_date = start_date
+        self.person_id = person_id
+        self.event_categories = event_categories
 
     def __repr__(self):
         return f"<Event {self.title}>"
 
 
 class EventCategory(db.Model, SerializerMixin):
-    # serialize_rules = ('-events.',)
-
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
 
