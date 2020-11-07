@@ -29,3 +29,11 @@ def get_one_by_id(id_person):
     if person is None:
         return create_response(status=404, message="Person {} not found".format(id_person))
     return create_response(data=person.to_dict())
+
+
+@person_blueprint.route("/<int:id_person>", methods=["PUT"])
+def update(id_person):
+    person = personService.update(id_person, request.json)
+    if not person:
+        return create_response(status=404, message="Person {} not found".format(id_person))
+    return create_response(data=person.to_dict())

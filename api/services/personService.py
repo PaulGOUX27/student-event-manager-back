@@ -22,5 +22,17 @@ def create(fields: dict) -> Person:
     return new_person
 
 
-def getOne(person_id: int) -> Person:
+def getOne(person_id: int) -> Person or None:
     return Person.query.get(person_id)
+
+
+def update(person_id: int, fields: dict) -> Person or None:
+    person = getOne(person_id)
+    if not person:
+        return None
+    person.login = fields['login']
+    person.password = fields['password']
+    person.firstname = fields['firstname']
+    person.lastname = fields['lastname']
+    db.session.commit()
+    return person

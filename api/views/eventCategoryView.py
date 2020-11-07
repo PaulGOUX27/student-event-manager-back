@@ -29,3 +29,11 @@ def get_one_by_id(id_ec):
     if event_category is None:
         return create_response(status=404, message="EventCategory {} not found".format(id_ec))
     return create_response(data=event_category.to_dict())
+
+
+@eventCategory_blueprint.route("/<int:ec_id>", methods=["PUT"])
+def update(ec_id):
+    event = eventCategoryService.update(ec_id, request.json)
+    if not event:
+        return create_response(status=204, message="EventCategory {} not found".format(ec_id))
+    return create_response(data=event.to_dict())

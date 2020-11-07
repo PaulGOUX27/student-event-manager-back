@@ -29,3 +29,11 @@ def get_one_by_id(id_event):
     if event is None:
         return create_response(status=404, message="Event {} not found".format(id_event))
     return create_response(data=event.to_dict())
+
+
+@event_blueprint.route("/<int:id_event>", methods=["PUT"])
+def update(id_event):
+    event = eventService.update(id_event, request.json)
+    if not event:
+        return create_response(status=404, message="Event {} not found".format(id_event))
+    return create_response(data=event.to_dict())
