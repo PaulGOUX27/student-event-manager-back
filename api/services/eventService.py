@@ -12,6 +12,7 @@ def getAll() -> Events:
 
 
 def deleteId(id_event: int) -> None:
+    getOne(id_event).event_categories = []
     Event.query.filter(Event.id == id_event).delete()
     db.session.commit()
 
