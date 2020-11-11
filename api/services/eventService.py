@@ -21,7 +21,6 @@ def create(fields: dict) -> Event:
     event_categories_ids = fields.get("event_categories_ids", [])
     fields.pop('event_categories_ids', None)
     event_categories = eventCategoryService.getAllIds(event_categories_ids)
-    logger.info(event_categories)
     if event_categories:
         fields["event_categories"] = event_categories
     new_event = Event(**fields)
@@ -50,3 +49,16 @@ def update(event_id: int, fields: dict) -> Event or None:
 
     db.session.commit()
     return event
+
+
+def getEventWithCategories(event_category_ids: []) -> Events:
+    events = getAll()
+    if not event_category_ids:
+        return events
+    filtered_events = []
+    for event in events:
+        for event_category in event.event_categories:
+            if str(event_category.id) in event_category_ids:
+                filtered_events.append(event)
+                break
+    return filtered_events

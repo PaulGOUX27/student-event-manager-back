@@ -8,7 +8,12 @@ event_blueprint = Blueprint("event_blueprint", __name__, url_prefix="/events")
 
 @event_blueprint.route("", methods=["GET"])
 def get_all_events():
-    return create_response(data={"events": serialize_list(eventService.getAll())})
+    event_category_ids = request.args.getlist('event_category_ids')
+    if not event_category_ids:
+        return create_response(data={"events": serialize_list(eventService.getAll())})
+    return create_response(
+        data={"events": serialize_list(eventService.getEventWithCategories(event_category_ids))}
+    )
 
 
 @event_blueprint.route("/<int:id_event>", methods=["DELETE"])
