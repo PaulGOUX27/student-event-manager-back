@@ -14,6 +14,7 @@ event_event_categories = db.Table('event_event_categories',
 
 class Event(db.Model, SerializerMixin):
     serialize_rules = ('-event_categories.events', '-person.events', '-person_id',)
+    datetime_format = '%Y-%m-%dT%H:%M'
 
     id = db.Column(db.Integer, primary_key=True)
     start_date = db.Column(db.DateTime)
