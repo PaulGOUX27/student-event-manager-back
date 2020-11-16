@@ -16,9 +16,11 @@ def generateCalendar():
     cal = ICalendar()
     cal['version'] = "2.0"
     cal['METHOD'] = 'PUBLISH'
-    cal['prodid'] = "//Aalto//CS-E4400//Student Event Manager"
+    cal['prodid'] = "-//Aalto//CS-E4400//Student Event Manager"
     for event in events:
         iEvent = IEvent()
+        iEvent['CLASS'] = 'PUBLIC'
+        iEvent['LAST-MODIFIED'] = now.strftime(fmt)
         iEvent['uid'] = str(event.id) + '@aalto-student-event-manager.fi'
         iEvent['Summary'] = event.title
         iEvent['location'] = event.place
