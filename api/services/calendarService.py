@@ -1,11 +1,13 @@
 from api.services import eventService
 from icalendar import Calendar as ICalendar, Event as IEvent
-import time
+from pytz import timezone
+from datetime import datetime
 
 
 def generateCalendar():
     events = eventService.getAll()
-    timestamp = time.localtime(time.time())
+    HEL = timezone('Europe/Helsinki')
+    now = HEL.localize(datetime.now())
     cal = ICalendar()
     cal['version'] = "2.0"
     cal['prodid'] = "//Aalto//CS-E4400//Student Event Manager"
@@ -15,10 +17,9 @@ def generateCalendar():
         iEvent['Summary'] = event.title
         iEvent['location'] = event.place
         iEvent['Description'] = event.description
-        iEvent['dtstart'] = event.start_date.isoformat().replace('-', '').replace(':', '')
-        iEvent['dtend'] = event.end_date.isoformat().replace('-', '').replace(':', '')
-        iEvent['dtstamp'] = str(timestamp.tm_year) + str(timestamp.tm_mon) + str(timestamp.tm_mday) + 'T' \
-                            + str(timestamp.tm_hour) + str(timestamp.tm_min) + str(timestamp.tm_sec)
+        iEvent['dtstart'] = event.start_date.isoformat().replace('-', '').replace(':', '') + 'Z'
+        iEvent['dtend'] = event.end_date.isoformat().replace('-', '').replace(':', '') + 'Z'
+        iEvent['dtstamp'] = now.isoformat().replace('-', '').replace(':', '') + 'Z'
         cal.add_component(iEvent)
 
     return cal.to_ical()
