@@ -11,6 +11,7 @@ utc = pytz.utc
 
 
 def generateCalendar():
+    logger.info('generate calendar')
     events = eventService.getAll()
     now = HEL.localize(datetime.now())
     cal = ICalendar()
