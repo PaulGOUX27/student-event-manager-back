@@ -11,7 +11,6 @@ utc = pytz.utc
 
 
 def generateCalendar():
-    logger.info('generate calendar')
     events = eventService.getAll()
     now = HEL.localize(datetime.now())
     cal = ICalendar()
@@ -29,6 +28,10 @@ def generateCalendar():
         iEvent['dtstart'] = (event.start_date + timedelta(hours=-2)).strftime(fmt)
         iEvent['dtend'] = (event.end_date + timedelta(hours=-2)).strftime(fmt)
         iEvent['dtstamp'] = now.strftime(fmt)
+        categories = []
+        for category in event.event_categories:
+            categories.append(category.name)
+        iEvent['categories'] = ','.join(categories)
         cal.add_component(iEvent)
 
     return cal.to_ical()
