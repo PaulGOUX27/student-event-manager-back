@@ -10,8 +10,8 @@ HEL = timezone('Europe/Helsinki')
 utc = pytz.utc
 
 
-def generateCalendar():
-    events = eventService.getAll()
+def generateCalendar(event_category_ids=None):
+    events = eventService.getEventWithCategories(event_category_ids)
     now = HEL.localize(datetime.now())
     cal = ICalendar()
     cal['version'] = "2.0"
@@ -19,8 +19,6 @@ def generateCalendar():
     cal['prodid'] = "-//Aalto//CS-E4400//Student Event Manager"
     for event in events:
         iEvent = IEvent()
-        iEvent['CLASS'] = 'PUBLIC'
-        iEvent['LAST-MODIFIED'] = now.strftime(fmt)
         iEvent['uid'] = str(event.id) + '@aalto-student-event-manager.fi'
         iEvent['Summary'] = event.title
         iEvent['location'] = event.place
