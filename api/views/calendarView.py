@@ -7,5 +7,5 @@ calendar_blueprint = Blueprint("calendar_blueprint", __name__, url_prefix="/cale
 
 @calendar_blueprint.route("", methods=["GET"])
 def generate_events():
-    event_category_ids = request.args.getlist('event_category_ids[]')
+    event_category_ids = request.args.getlist('event_category_ids')
     return Response(calendarService.generateCalendar(event_category_ids), status=200, mimetype="text/calendar")
