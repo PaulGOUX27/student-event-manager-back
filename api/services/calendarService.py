@@ -16,7 +16,7 @@ def generateCalendar():
         iEvent['location'] = event.place
         iEvent['Description'] = event.description
         iEvent['dtstart'] = event.start_date.isoformat().replace('-', '').replace(':', '')
-        iEvent['dtend'] = event.start_date.isoformat().replace('-', '').replace(':', '')
+        iEvent['dtend'] = event.end_date.isoformat().replace('-', '').replace(':', '')
         iEvent['dtstamp'] = str(timestamp.tm_year) + str(timestamp.tm_mon) + str(timestamp.tm_mday) + 'T' \
                             + str(timestamp.tm_hour) + str(timestamp.tm_min) + str(timestamp.tm_sec)
         cal.add_component(iEvent)
