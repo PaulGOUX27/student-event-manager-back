@@ -1,4 +1,4 @@
-from flask import Blueprint, request
+from flask import Blueprint, Response
 
 from api.services import calendarService
 
@@ -7,4 +7,4 @@ calendar_blueprint = Blueprint("calendar_blueprint", __name__, url_prefix="/cale
 
 @calendar_blueprint.route("", methods=["GET"])
 def generate_events():
-    return calendarService.generateCalendar(), 200
+    return Response(calendarService.generateCalendar(), status=200, mimetype="text/calendar")
