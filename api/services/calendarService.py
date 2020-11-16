@@ -15,6 +15,7 @@ def generateCalendar():
     now = HEL.localize(datetime.now())
     cal = ICalendar()
     cal['version'] = "2.0"
+    cal['METHOD'] = 'PUBLISH'
     cal['prodid'] = "//Aalto//CS-E4400//Student Event Manager"
     for event in events:
         iEvent = IEvent()
